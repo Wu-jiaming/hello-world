@@ -133,7 +133,7 @@
 
             $.ajax({
                 type:"POST",
-                url:'http://localhost:8080/laravel2/public/service/login',
+                url:"{{url('/service/login')}}",
                 dataType:'json',
                 cache:false,
                 data:{username:username,password:password,validate_code:validate_code,

@@ -49,7 +49,7 @@
                 <p>总计：</p>
             </div>
             <div class="weui_cell_ft bk_price" style="font-size: 25px;">
-                ￥ {{--{{$total_price}}--}}
+                ￥ {{$total_price}}
             </div>
         </div>
     </div>
@@ -62,5 +62,34 @@
 @stop
 
 @section('my-js')
-
+<script type="text/javascript">
+    $.ajax({
+        type:"POST",
+        url:'{{url('/service/pay')}}',
+        dataType:'json',
+        cache:false,
+        data:{},
+        success:function (data) {
+            if (data == null){
+                $('.bk_toptips').show();
+                $('.bk_toptips span').html('服务端错误！');
+                setTimeout(function () {
+                    $('.bk_toptips').hide();
+                },2000);
+            }
+            $('.bk_toptips').show();
+            $('.bk_toptips span').html('支付成功！');
+            setTimeout(function () {
+                $('.bk_toptips').hide();
+            },2000);
+        },
+        error:function () {
+            $('.bk_toptips').show();
+            $('.bk_toptips span').html('支付失败！');
+            setTimeout(function () {
+                $('.bk_toptips').hide();
+            },2000);
+        }
+    });
+</script>
     @stop

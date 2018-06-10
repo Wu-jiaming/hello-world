@@ -1,7 +1,7 @@
 @extends('admin.master')
 
 @section('content')
-<form class="form form-horizontal" id="form-category-add">
+<form class="form form-horizontal" id="form-category-edit">
 
     <div class="row cl">
         <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>名称：</label>
@@ -50,16 +50,19 @@
         </div>
     </div>
 </form>
+{{--
 <!--/_footer 作为公共模版分离出去-->
 <script type="text/javascript" src="{{asset('/admin/lib/jquery/1.9.1/jquery.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('/admin/lib/layer/2.4/layer.js')}}"></script>
 <script type="text/javascript" src="{{asset('/admin/static/h-ui/js/H-ui.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('/admin/static/h-ui.admin/js/H-ui.admin.js')}}"></script>
+--}}
 
 <!--请在下方写此页面业务相关的脚本-->
 <script type="text/javascript" src="{{url('/admin/lib/jquery.validation/1.14.0/jquery.validate.js')}}"></script>
 <script type="text/javascript" src="{{url('/admin/lib/jquery.validation/1.14.0/validate-methods.js')}}"></script>
 <script type="text/javascript" src="{{url('/admin/lib/jquery.validation/1.14.0/messages_zh.js')}}"></script>
+<!--上传文件脚本-->
 
 
 @stop
@@ -67,7 +70,7 @@
 @section('my-js')
 <script type="text/javascript">
 
-    $("#form-category-add").validate({
+    $("#form-category-edit").validate({
         rules:{
             name:{
                 required:true,
@@ -128,10 +131,10 @@
         }
     });
 
-    function uploadFileToServer(fileElmId, type, id)
+   function uploadFileToServer(fileElmId, type, id)
     {
         $.ajaxFileUpload({
-            url: 'http://localhost:8080/laravel2/public/admin/service/upload/' + type,
+            url: 'http://'+'{{request()->getHttpHost().request()->getBasePath()}}'+'/admin/service/upload/' + type,
             fileElementId: fileElmId,
             dataType: 'text',
             success: function (data)
@@ -154,7 +157,7 @@
         $.ajaxFileUpload({
 
 //            url: 'http://localhost:8080/laravel2/public/admin/service/upload/' + type,
-            url: '{{request()->getBaseUrl()}}'+'/admin/service/upload/' + type,
+            url: 'http://'+'{{request()->getHttpHost().request()->getBaseUrl()}}'+'/admin/service/upload/' + type,
             fileElementId: fileElmId,
             dataType: 'text',
             success: function (data)
@@ -162,7 +165,7 @@
                 var result = JSON.parse(data);
 //                $("#"+id).attr("src", "http://localhost:8080/laravel2/public/"+result.uri);
                 $("#"+id).attr("src", "http://"+"{{request()->getHttpHost().request()->getBasePath()}}"+result.uri);
-                alert(result.uri);
+                /!*alert(result.uri);*!/
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 alert(errorThrown);
