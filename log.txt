@@ -8,7 +8,7 @@ request url = https://sandboxapp.cloopen.com:8883/2013-12-26/Accounts/aaf98f8949
 response body = <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Response>
     <statusCode>113302</statusCode>
-    <statusMsg>【短信】您正在使用云通讯测试模板且短信接收者不是注册的测试号码</statusMsg>
+    <statusMsg>【短信】i您正在使用云通讯测试模板且短信接收者不是注册的测试号码</statusMsg>
 </Response>
 
 request body = <TemplateSMS>
