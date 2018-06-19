@@ -37,7 +37,7 @@
                     <tr class="text-c">
                         <td><input type="checkbox" value="" name="product_item" id="{{$product->id}}" ></td>
                         <td>{{$product->id}}</td>
-                        <td>{{$product->name}}</td>
+                        <td><u style="cursor:pointer" class="text-primary" onclick="product_info('产品详情','{{url('/admin/product_info?id='.$product->id)}}','10001','360','400')">{{$product->name}}</u></td>
                         <td>{{$product->summary}}</td>
                         <td>{{$product->price}}</td>
                         <td>
@@ -51,7 +51,9 @@
                         </td>
                         <td>{{$product->created_at}}</td>
                         <td class="td-manage">
-                            <a title="编辑" href="javascript:;" onclick="product_edit('编辑','{{url('/admin/category_edit?id='.$product->id)}}','','','510')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
+                            <a title="详情" href="javascript:;" onclick="product_info('产品详情','{{url('/admin/product_info?id='.$product->id)}}','','','510')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe685;</i></a>
+
+                            <a title="编辑" href="javascript:;" onclick="product_edit('编辑','{{url('/admin/product_edit?id='.$product->id)}}','','','510')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
                             <a title="删除" href="javascript:;" onclick="product_del(this,'{{$product->id}}')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
                     </tr>
 
@@ -65,11 +67,13 @@
 
 
 
+{{--
     <!--_footer 作为公共模版分离出去-->
     <script type="text/javascript" src="{{url('/admin/lib/jquery/1.9.1/jquery.min.js')}}"></script>
     <script type="text/javascript" src="{{url('/admin/lib/layer/2.4/layer.js')}}"></script>
     <script type="text/javascript" src="{{url('/admin/static/h-ui/js/H-ui.min.js')}}"></script>
     <script type="text/javascript" src="{{url('/admin/static/h-ui.admin/js/H-ui.admin.js')}}"></script>
+--}}
 
     <!--请在下方写此页面业务相关的脚本-->
     <script type="text/javascript" src="{{url('/admin/lib/My97DatePicker/4.8/WdatePicker.js')}}"></script>
@@ -135,7 +139,7 @@
             });
         }
         /*用户-编辑*/
-        function category_edit(title,url,id,w,h){
+        function product_edit(title,url,id,w,h){
             layer_show(title,url,w,h);
         }
         /*密码-修改*/
@@ -143,13 +147,13 @@
             layer_show(title,url,w,h);
         }
         /*用户-删除*/
-        function category_del(obj,id){
+        function product_del(obj,id){
             alert("{{request()->getBaseUrl()}}");
 
             layer.confirm('确认要删除吗？',function(index){
                 $.ajax({
                     type: 'POST',
-                    url: '{{url('/admin/service/category/delete')}}',
+                    url: '{{url('/admin/service/product/delete')}}',
 
                     dataType: 'json',
                     data:{id:id,_token:"{{csrf_token()}}"},
@@ -183,7 +187,7 @@
 @section('my-js')
 <script type="text/javascript">
     //判断是否被选中，然后添加或者移除css
-    $('input:checkbox[name=category_item]').click(function () {
+    $('input:checkbox[name=product_item]').click(function () {
         var checked = $(this).attr('checked');
         if(checked == 'checked'){
             $(this).attr('checked',false);
@@ -199,7 +203,7 @@
     /*批量-删除*/
     function datadel(){
         var product_ids_arr=[];
-        $('input:checkbox[name=category_item]').each(function () {
+        $('input:checkbox[name=product_item]').each(function () {
             if ($(this).attr('checked') == 'checked'){
                 product_ids_arr.push($(this).attr('id'));
             }
@@ -208,7 +212,7 @@
 
             $.ajax({
                 type: 'POST',
-                url: '{{url('/admin/service/category/items_delete')}}',
+                url: '{{url('/admin/service/product/items_delete')}}',
                 dataType: 'json',
                 data:{ids:product_ids_arr+"",_token:"{{csrf_token()}}"},
                 success: function(data){
@@ -233,6 +237,16 @@
             });
         });
 
+    }
+    
+    //产品详情
+    function product_info(title,url) {
+        var index = layer.open({
+            type:2,
+            title:title,
+            content:url
+        });
+        layer.full(index);
     }
 
 

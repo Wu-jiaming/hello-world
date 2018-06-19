@@ -86,7 +86,8 @@
         $.ajax({
           type:'GET',
 
-          url:'http://localhost:8080/laravel2/public/service/cart/add/' + product_id ,
+          url:"{{url('/service/cart/add/')}}" +"/"+ product_id ,
+            {{--"{{url('/service/cart/add/')}}""{{url('/product/')}}"+"/"--}}
           dataType:'json',
             cache:false,
             success:function (data) {

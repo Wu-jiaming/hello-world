@@ -198,7 +198,7 @@
             }, 1000);
 
             $.ajax({
-                url: 'http://localhost:8080/laravel2/public/service/validate_phone/send',
+                url: "{{url('/service/validate_phone/send')}}",
                 type:"POST",
                 dataType: 'json',
                 cache: false,
@@ -281,7 +281,7 @@
                 $.ajax(
                     {
                         type:"POST",
-                        url:'http://localhost:8080/laravel2/public/service/register',
+                        url:"{{url('/service/register')}}",
                         dataType:'json',
                         cache:false,
                         data:{phone:phone,email:email,password:password,confirm:confirm,

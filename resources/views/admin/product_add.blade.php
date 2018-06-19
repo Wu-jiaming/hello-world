@@ -1,7 +1,7 @@
 @extends('admin.master')
 
 @section('content')
-<form class="form form-horizontal" id="form-category-add">
+<form class="form form-horizontal" id="form-product-add">
 
     <div class="row cl">
         <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>名称：</label>
@@ -32,6 +32,13 @@
             </select>
 			</span> </div>
     </div>
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-3">预览图</label>
+        <div class="formControls col-xs-4 col-sm-5">
+            <img id="preview_id" src="{{url('/admin/static/h-ui.admin/images/icon-add.png')}}" style="border: 1px solid #B8B9B9; width: 100px;height: 100px; cursor: pointer;" onclick="$('#input_id').click()"/>
+            <input type="file" name="file" id="input_id" style="display: none;" onchange="return uploadImageToServer('input_id','images','preview_id')"/>
+        </div>
+    </div>
 
     <div class="row cl">
         <label class="form-label col-xs-4 col-sm-3">详细内容</label>
@@ -41,7 +48,7 @@
     </div>
 
     <div class="row cl">
-        <label class="form-label col-xs-4 col-sm-3">预览图</label>
+        <label class="form-label col-xs-4 col-sm-3">产品图片</label>
         <div class="formControls col-xs-4 col-sm-8">
             <img id="preview_id1" src="{{url('/admin/static/h-ui.admin/images/icon-add.png')}}" style="border: 1px solid #B8B9B9; width: 100px;height: 100px; cursor: pointer;" onclick="$('#input_id1').click()"/>
             <input type="file" name="file" id="input_id1" style="display: none;" onchange="return uploadImageToServer('input_id1','images','preview_id1')"/>
@@ -68,11 +75,13 @@
         </div>
     </div>
 </form>
+{{--
 <!--/_footer 作为公共模版分离出去-->
 <script type="text/javascript" src="{{asset('/admin/lib/jquery/1.9.1/jquery.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('/admin/lib/layer/2.4/layer.js')}}"></script>
 <script type="text/javascript" src="{{asset('/admin/static/h-ui/js/H-ui.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('/admin/static/h-ui.admin/js/H-ui.admin.js')}}"></script>
+--}}
 
 <!--请在下方写此页面业务相关的脚本-->
 <script type="text/javascript" src="{{url('/admin/lib/jquery.validation/1.14.0/jquery.validate.js')}}"></script>
@@ -89,10 +98,10 @@
 
 @section('my-js')
 <script type="text/javascript">
+
     var ue = UE.getEditor('editor');
     ue.execCommand( "getlocaldata" );
-
-    $("#form-category-add").validate({
+    $("#form-product-add").validate({
         rules:{
             name:{
                 required:true,
@@ -109,6 +118,11 @@
                 minlength:1,
                 maxlength:16
             },
+            category_id:{
+                required:true,
+                minlength:1,
+                maxlength:16
+            },
 
         },
         onkeyup:false,
@@ -119,16 +133,20 @@
                 type: 'post',
                 url: '{{url('/admin/service/product/add')}}' ,
                 dataType:'json',
-                data: {name:$('input[name=name]').val(),
+                data: {
+                        name:$('input[name=name]').val(),
                         summary:$('input[name=summary]').val(),
-                        parent_id:$('select[name=category_id] option:selected').val(),
-                        image1:($('#preview_id1').attr('src')!='{{url('/admin/static/h-ui.admin/images/icon-add.png')}}' ? $('#preview_id1').attr('src') : ''),
-                        image2:($('#preview_id2').attr('src')!='{{url('/admin/static/h-ui.admin/images/icon-add.png')}}' ? $('#preview_id2').attr('src') : ''),
-                        image3:($('#preview_id3').attr('src')!='{{url('/admin/static/h-ui.admin/images/icon-add.png')}}' ? $('#preview_id3').attr('src') : ''),
-                        image4:($('#preview_id4').attr('src')!='{{url('/admin/static/h-ui.admin/images/icon-add.png')}}' ? $('#preview_id4').attr('src') : ''),
-                        image5:($('#preview_id5').attr('src')!='{{url('/admin/static/h-ui.admin/images/icon-add.png')}}' ? $('#preview_id5').attr('src') : ''),
+                        price:$('input[name=price]').val(),
+                        category_id:$('select[name=category_id] option:selected').val(),
+                        content:ue.getContent(),
+                        preview:($('#preview_id').attr('src')!='{{url('/admin/static/h-ui.admin/images/icon-add.png')}}' ? $('#preview_id').attr('src') : ''),
+                        preview1:($('#preview_id1').attr('src')!='{{url('/admin/static/h-ui.admin/images/icon-add.png')}}' ? $('#preview_id1').attr('src') : ''),
+                        preview2:($('#preview_id2').attr('src')!='{{url('/admin/static/h-ui.admin/images/icon-add.png')}}' ? $('#preview_id2').attr('src') : ''),
+                        preview3:($('#preview_id3').attr('src')!='{{url('/admin/static/h-ui.admin/images/icon-add.png')}}' ? $('#preview_id3').attr('src') : ''),
+                        preview4:($('#preview_id4').attr('src')!='{{url('/admin/static/h-ui.admin/images/icon-add.png')}}' ? $('#preview_id4').attr('src') : ''),
+                        preview5:($('#preview_id5').attr('src')!='{{url('/admin/static/h-ui.admin/images/icon-add.png')}}' ? $('#preview_id5').attr('src') : ''),
 
-                    _token:"{{csrf_token()}}"
+                        _token:"{{csrf_token()}}"
                 },
 
                 success: function(data){
@@ -166,7 +184,7 @@
     function uploadFileToServer(fileElmId, type, id)
     {
         $.ajaxFileUpload({
-            url: 'http://localhost:8080/laravel2/public/admin/service/upload/' + type,
+            url: 'http://'+'{{request()->getHttpHost().request()->getBasePath()}}' + type,
             fileElementId: fileElmId,
             dataType: 'text',
             success: function (data)
@@ -188,13 +206,13 @@
 
 
         $.ajaxFileUpload({
-            url: 'http://localhost:8080/laravel2/public/admin/service/upload/' + type,
+            url: 'http://'+'{{request()->getHttpHost().request()->getBasePath()}}' + type,
             fileElementId: fileElmId,
             dataType: 'text',
             success: function (data)
             {
                 var result = JSON.parse(data);
-                $("#"+id).attr("src", "http://localhost:8080/laravel2/public/"+result.uri);
+                $("#"+id).attr("src", 'http://'+'{{request()->getHttpHost().request()->getBasePath()}}'+result.uri);
 
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {

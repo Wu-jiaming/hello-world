@@ -13,7 +13,7 @@
 
 <!-- 标题 返回  菜单-->
 <div class="bk_title_bar">
-    <img class="bk_back" src="{{url('images/back.png')}}" onclick="history.go(1)"/>
+    <img class="bk_back" src="{{url('images/back.png')}}" onclick="history.go(-1)"/>
     <p class="bk_title_content"></p>
     <img class="bk_menu" src="{{url('images/menu.png')}}" onclick="onMenuClick()"/>
 </div>
@@ -83,11 +83,11 @@
             setTimeout(function() {$('.bk_toptips').hide();}, 2000);
 
         } else if(index == 2) {
-            location.href = 'http://localhost:8080/laravel2/public/category';
+            location.href = "{{url('/category')}}";
         } else if(index == 3){
-            location.href = 'http://localhost:8080/laravel2/public/cart';
+            location.href = "{{url('/cart')}}";
         } else {
-            location.href = 'http://localhost:8080/laravel2/public/order_list';
+            location.href = "{{url('/order_list')}}";
 
         }
     }

@@ -2,14 +2,14 @@
 function uploadFileToServer(fileElmId, type, id)
 {
 	$.ajaxFileUpload({
-		url: 'http://localhost:8080/laravel2/public/admin/service/upload/' + type,
+		url: 'http://'+'{{request()->getHttpHost().request()->getBasePath()}}'+'/admin/service/upload/' + type,
 		fileElementId: fileElmId,
 		dataType: 'text',
 
 		success: function (data)
 		{
 			var result = JSON.parse(data);
-			$("#"+id).val(result.uri);
+			$("#"+id).val('http://'+'{{request()->getHttpHost().request()->getBasePath()}}'+result.uri);
 		},
     error: function (XMLHttpRequest, textStatus, errorThrown) {
       alert(errorThrown);
@@ -20,22 +20,25 @@ function uploadFileToServer(fileElmId, type, id)
 
 function uploadImageToServer(fileElmId, type, id)
 {
-	//$("#"+id).attr("src", "/admin/static/h-ui.admin/images/loading.gif");
-	$("#"+id).attr("src", "D:/xampp/htdocs/laravel2/public/admin/static/h-ui.admin/images/loading.gif");
-	$.ajaxFileUpload({
-        url: 'http://localhost:8080/laravel2/public/admin/service/upload/' + type,
-		fileElementId: fileElmId,
-		dataType: 'text',
-		success: function (data)
-		{
-			var result = JSON.parse(data);
-			$("#"+id).attr("src", result.uri);
-		},
-    error: function (XMLHttpRequest, textStatus, errorThrown) {
-      alert(errorThrown);
-    }
-	});
-	return false;
+    $("#"+id).attr("src", "{{url('/admin/static/h-ui.admin/images/loading.gif')}}");
+
+    $.ajaxFileUpload({
+
+//            url: 'http://localhost:8080/laravel2/public/admin/service/upload/' + type,
+        url: 'http://'+'{{request()->getHttpHost().request()->getBaseUrl()}}'+'/admin/service/upload/' + type,
+        fileElementId: fileElmId,
+        dataType: 'text',
+        success: function (data)
+        {
+            var result = JSON.parse(data);
+//                $("#"+id).attr("src", "http://localhost:8080/laravel2/public/"+result.uri);
+            $("#"+id).attr("src", "http://"+"{{request()->getHttpHost().request()->getBasePath()}}"+result.uri);
+            /!*alert(result.uri);*!/
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            alert(errorThrown);
+        }
+    });
 }
 
 /// JQuery Extends

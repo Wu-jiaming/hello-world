@@ -19,7 +19,7 @@
                     <div style="position: absolute; left: 100px ; right: 0px; top: 0px;" >
                         <p class="">{{$cart_item->product->name}}</p>
                         <p class="bk_time" style="margin-top: 15px;">
-                            数量:<span class="bk_summary">x{{$cart_item->count}}</span>
+                            数量:<span class="bk_summary" style="">x{{$cart_item->count}}</span>
                         </p>
                         <p class="bk_time" style="">
                             总计：<span class="bk_price">￥{{$cart_item->product->price * $cart_item->count}}</span>
@@ -81,7 +81,7 @@
             return;
             }
 
-            location.href = 'http://localhost:8080/laravel2/public/order_commit/'+product_ids_arr ;
+            location.href = "{{url('/order_commit/')}}" + "/"+product_ids_arr ;
         }
 
         function _onDelete() {
@@ -104,7 +104,7 @@
 
             $.ajax({
                 type:"GET",
-                url:'http://localhost:8080/laravel2/public/service/cart/delete',
+                url:"{{url('/service/cart/delete')}}",
                 dataType:'json',
                 cache:false,
                 data:{product_ids:product_ids_arr+''},//+‘’ 意思是为了让这个数组变成id，让控制器里使用

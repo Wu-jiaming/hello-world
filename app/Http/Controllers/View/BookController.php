@@ -42,9 +42,26 @@ class BookController extends Controller{
             }
         }
         return view('pdt_content')->with('product',$products)
-                                        ->with('pdt_content',$pdt_content)
-                                        ->with('pdt_images',$pdt_images)
-                                        ->with('count' , $count);
+            ->with('pdt_content',$pdt_content)
+            ->with('pdt_images',$pdt_images)
+            ->with('count' , $count);
+    }
+
+    public function toCategory_id(Request $request ,$category_id){
+        $category = Category::find($category_id);
+        $products = Product::where('category_id',$category_id)->get();
+        return view('category_id')->with('products',$products)
+                                    ->with('category',$category);
+    }
+
+
+    public function toCategory_name(Request $request ,$name){
+        $category = Category::where('name', $name)->get();
+
+        $category_id = $category::find('id')->get();
+        $products = Product::where('category_id',$category_id)->get();
+        return view('category_id')->with('products',$products)
+            ->with('category',$category);
     }
 
 }

@@ -102,7 +102,7 @@ class MemberController extends Controller
             $m3_email->to = $email;
             $m3_email->cc = 'ndjfhrhge@163.com';
             $m3_email->subject = 'LA书店验证';
-            $m3_email->content = '请于24小时内点击该链接完成验证.http://localhost:8080/laravel2/public/service/validate_email'
+            $m3_email->content = '请于24小时内点击该链接完成验证.'+url('/service/validate_email')+'http://localhost:8080/laravel2/public/service/validate_email'
                                     . '?member_id=' . $member->id
                                     . '&code=' . $uuid;
 

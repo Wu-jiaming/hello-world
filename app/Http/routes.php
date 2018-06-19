@@ -27,6 +27,7 @@ Route::get('/product/{product_id}', ['uses'=>'View\BookController@toProduct']);
 
 
 Route::get('/product/{product_id}',['uses' => 'View\BookController@toPdtContent']);
+Route::get('/product/category_id/{category_id}',['uses' => 'View\BookController@toCategory_id']);
 Route::get('/cart',['uses' => 'View\CartController@toCart']);
 
 Route::group(['middleware' => 'check.login'] , function (){
@@ -46,6 +47,8 @@ Route::group(['prefix' => 'service'] ,function (){
     Route::get('cart/add/{product_id}', ['uses'=>'Service\CartController@addCart']);
     Route::get('cart/delete', ['uses'=>'Service\CartController@deleteCart']);
     Route::post('upload/{type}',['uses'=>'Service\UploadController@uploadFile']);
+    Route::post('order/delete',['uses'=>'Service\OrderController@deleteOrder']);
+
 });
 
 Route::group(['prefix' => 'admin'] , function (){
@@ -57,6 +60,15 @@ Route::group(['prefix' => 'admin'] , function (){
       Route::post('category/items_delete',['uses'=>'Admin\CategoryController@itemsDelete']);
       Route::post('upload/{type}',['uses'=>'Admin\UploadController@uploadFile']);
 
+      Route::post('product/add',['uses'=>'Admin\ProductController@productAdd']);
+      Route::post('product/edit',['uses'=>'Admin\ProductController@productEdit']);
+      Route::post('product/delete',['uses'=>'Admin\ProductController@productDelete']);
+      Route::post('product/items_delete',['uses'=>'Admin\ProductController@itemsDelete']);
+
+
+
+
+
 
     });
     Route::get('login',['uses'=>'Admin\IndexController@toLogin']);
@@ -66,6 +78,8 @@ Route::group(['prefix' => 'admin'] , function (){
     Route::get('category_edit',['uses'=>'Admin\CategoryController@toCategoryEdit']);
     Route::get('product',['uses'=>'Admin\ProductController@toProduct']);
     Route::get('product_add',['uses'=>'Admin\ProductController@toProductAdd']);
+    Route::get('product_edit',['uses'=>'Admin\ProductController@toProductEdit']);
+    Route::get('product_info',['uses'=>'Admin\ProductController@toProductInfo']);
 
 
 });

@@ -114,7 +114,7 @@
     function uploadFileToServer(fileElmId, type, id)
     {
         $.ajaxFileUpload({
-            url: 'http://localhost:8080/laravel2/public/admin/service/upload/' + type,
+            url:  "{{url('/admin/service/upload/')}}"+"/"+ type,
             fileElementId: fileElmId,
             dataType: 'text',
             success: function (data)
@@ -134,13 +134,13 @@
     {
         $("#"+id).attr("src", "{{url('/admin/static/h-ui.admin/images/loading.gif')}}");
         $.ajaxFileUpload({
-            url: 'http://localhost:8080/laravel2/public/admin/service/upload/' + type,
+            url: "{{url('/admin/service/upload/')}}"+"/" + type,
             fileElementId: fileElmId,
             dataType: 'text',
             success: function (data)
             {
                 var result = JSON.parse(data);
-                $("#"+id).attr("src", "http://localhost:8080/laravel2/public/"+result.uri);
+                $("#"+id).attr("src",  "{{url('')}}"+"/" +result.uri);
                 alert(result.uri);
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
