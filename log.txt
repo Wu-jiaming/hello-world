@@ -306,6 +306,7 @@ response body = <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     </TemplateSMS>
 </Response>
 
+<<<<<<< HEAD
 request body = <TemplateSMS>
                     <to>13112339438</to>
                     <appId>8aaf07086102e1e801610f03d62b05fb</appId>
@@ -314,3 +315,5 @@ request body = <TemplateSMS>
                   </TemplateSMS>
 request url = https://sandboxapp.cloopen.com:8883/2013-12-26/Accounts/8aaf07086102e1e801610f03d5c905f4/SMS/TemplateSMS?sig=CBEAEBFA22B8A6C2DAAF9528EC527E3C
 response body = <?xml version="1.0" encoding="UTF-8" standalone="yes"?><Response><statusCode>172001</statusCode><statusMsg>网络错误</statusMsg></Response>
+=======
+>>>>>>> df522e5c1ef94f2d30f92c79c9fac9cade30da9c

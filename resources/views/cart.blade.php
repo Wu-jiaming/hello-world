@@ -81,7 +81,11 @@
             return;
             }
 
+<<<<<<< HEAD
             location.href = "{{url('/order_commit/')}}" + "/"+product_ids_arr ;
+=======
+            location.href = "{{url('/order_commit/')}}"+ "/" + product_ids_arr ;
+>>>>>>> df522e5c1ef94f2d30f92c79c9fac9cade30da9c
         }
 
         function _onDelete() {

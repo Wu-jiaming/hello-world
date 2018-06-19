@@ -26,3 +26,6 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 
 The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
 #laravel v29 without pay
+#基于larave5.2框架的商城系统
+#mysql5.6 php5.6.36 php7登录功能失败
+#linux , win 均可实现功能
